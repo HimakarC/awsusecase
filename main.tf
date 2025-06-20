@@ -32,6 +32,7 @@ resource "aws_s3_bucket_policy" "static_website_bucket_policy" {
   policy = jsonencode({
       Version = "2012-10-17",
       Statement = [{
+      Principal = "*",
       Effect = "Allow",
       Action = [
         "s3:PutBucketPolicy",
