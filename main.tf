@@ -22,7 +22,7 @@ policy = jsonencode({
         Effect = "Allow",
         Principal = "*",
         Action = "s3:GetObject",
-        Resource = "${aws_s3_bucket.static_website_bucket.arn}/*"
+        Resource = "${aws_s3_bucket.my_terraform_bucket.arn}/*"
       }
     ]
   })
