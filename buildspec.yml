@@ -3,15 +3,36 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.8
+      # Use a recent version of Python for general scripting if needed
+      python: 3.9
     commands:
-      - curl -O https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
-      - unzip terraform_1.5.7_linux_amd64.zip
-      - mv terraform /usr/local/bin/
+      # Install Terraform CLI
+      - |
+        TF_VERSION="1.8.5" # Specify the desired Terraform version
+        curl -LO [https://releases.hashicorp.com/terraform/$](https://releases.hashicorp.com/terraform/$){TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+        unzip terraform_${TF_VERSION}_linux_amd64.zip
+        mv terraform /usr/local/bin/
+        rm terraform_${TF_VERSION}_linux_amd64.zip
+      - terraform --version # Verify Terraform installation
+
   pre_build:
     commands:
+      # Initialize Terraform backend (if using remote state, e.g., S3)
+      # For simple S3 bucket creation, local state might be sufficient for a first run
+      # but for production, always use a remote backend like S3+DynamoDB
+      - echo "Initializing Terraform..."
       - terraform init
+
   build:
     commands:
-      - terraform plan -out=tfplan
-      - terraform apply -auto-approve tfplan
+      # Plan Terraform changes (optional, but good for review)
+      - echo "Planning Terraform changes..."
+      - terraform plan -out=tfplan.out
+
+      # Apply Terraform changes
+      - echo "Applying Terraform changes..."
+      - terraform apply -auto-approve tfplan.out
+
+  post_build:
+    commands:
+      - echo "Terraform execution complete."
