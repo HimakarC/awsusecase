@@ -23,7 +23,6 @@ phases:
 
   build:
     commands:
-      - terraform init -input=true
       - terraform apply -input=true -auto-approve
 
   post_build:
