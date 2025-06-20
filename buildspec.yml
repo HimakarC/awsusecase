@@ -7,12 +7,10 @@ phases:
       python: 3.9
     commands:
       # Install Terraform CLI
-      - |
-        TF_VERSION="1.8.5" # Specify the desired Terraform version
-        curl -LO [https://releases.hashicorp.com/terraform/$](https://releases.hashicorp.com/terraform/$){TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
-        unzip terraform_${TF_VERSION}_linux_amd64.zip
-        mv terraform /usr/local/bin/
-        rm terraform_${TF_VERSION}_linux_amd64.zip
+      - wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg /
+      echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list /
+      sudo apt update /
+      sudo apt-get install terraform
       - terraform --version # Verify Terraform installation
 
   pre_build:
