@@ -22,11 +22,11 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
 }
 
 resource "aws_s3_object" "index_html" {
-  bucket       = aws_s3_bucket.my_terraform_bucket.bucket
-  key          = "index.html"
-  source       = "public/index.html"  # Replace with actual path to your file
-  acl          = "public-read"
-  content_type = "text/html"
+  bucket       = aws_s3_bucket.my_terraform_bucket.id
+  key          = "index.html"
+  source       = "${path.module}/index.html"  # Ensure index.html is in the same folder as this .tf file
+  acl          = "public-read"
+  content_type = "text/html"
 }
 
 # CodeBuild Role
