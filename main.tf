@@ -15,10 +15,9 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
   acl    = "public-read" # Removed deprecated acl argument
 
   website {
-    index_document = "index.html"
-    error_document = "error.html"
-  }
-}
+    index_document = "index.html"
+    error_document = "error.html"
+  }
 
   tags = {
     Environment = "Development"
