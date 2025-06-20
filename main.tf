@@ -12,7 +12,7 @@ provider "aws" {
 # Define the S3 bucket
 resource "aws_s3_bucket" "my_terraform_bucket" {
   bucket = "himbhavchappidi2025" # IMPORTANT: Replace with a globally unique name!
-  acl    = "public" # Removed deprecated acl argument
+  acl    = "public-read" # Removed deprecated acl argument
 
   website {
     index_document = "index.html"
@@ -28,11 +28,11 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
 }
 
 resource "aws_s3_object" "index_html" {
-  bucket  = aws_s3_bucket.my_terraform_bucket.id
-  key  = "index.html"
-  source = "${path.module}/index.html"  # Assumes index.html is in the same folder as your .tf files
-  acl = "public-read"
-  content_type = "text/html"
+  bucket = aws_s3_bucket.my_terraform_bucket.id
+  key = "index.html"
+  source = "${path.module}/index.html"  # Assumes index.html is in the same folder as your .tf files
+  acl = "public-read"
+  content_type = "text/html"
 }
 
 # CodeBuild Role
