@@ -5,7 +5,7 @@ provider "aws" {
 # Define the S3 bucket
 resource "aws_s3_bucket" "my_terraform_bucket" {
   bucket = "your-unique-codebuild-website-bucket-name" # IMPORTANT: Replace with a globally unique name!
-  acl    = "private" # Keeping ACL private, using policy for public access
+  # acl    = "private" # Removed deprecated acl argument
 
   tags = {
     Environment = "Development"
@@ -79,7 +79,7 @@ resource "aws_s3_bucket_policy" "my_terraform_bucket_policy" {
 # Output the S3 website endpoint
 output "s3_website_endpoint" {
   description = "The S3 static website endpoint"
-  value       = aws_s3_bucket_website_configuration.website_config.endpoint
+  value       = aws_s3_bucket_website_configuration.website_config.website_endpoint
 }
 
 # Output the S3 bucket name
