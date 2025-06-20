@@ -75,9 +75,3 @@ resource "aws_s3_bucket_policy" "my_terraform_bucket_policy" {
     ]
   })
 }
-
-# Output the S3 website endpoint
-output "s3_website_endpoint" {
-  description = "The S3 static website endpoint"
-  value       = aws_s3_bucket_website_configuration.website_config.website_endpoint
-}
