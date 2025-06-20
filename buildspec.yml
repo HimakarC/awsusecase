@@ -12,4 +12,4 @@ phases:
   build:
     commands:
       - terraform init
-      - terraform apply -input=false tfapply
+      - terraform apply -input=false -auto-approve
