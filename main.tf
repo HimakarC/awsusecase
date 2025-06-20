@@ -12,7 +12,7 @@ provider "aws" {
 # Define the S3 bucket
 resource "aws_s3_bucket" "my_terraform_bucket" {
   bucket = "himbhavchappidi2025" # IMPORTANT: Replace with a globally unique name!
-  acl    = "public-read" # Removed deprecated acl argument
+  # acl    = "public-read" # Removed deprecated acl argument
 
   website {
     index_document = "index.html"
