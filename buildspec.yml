@@ -7,9 +7,6 @@ phases:
   build:
     commands:
       - echo "Building static site..."
-  post_build:
-    commands:
-      - aws s3 sync ./website s3://my-static-site-bucket-123 --delete
 
 artifacts:
   files:
