@@ -12,17 +12,12 @@ phases:
       - sudo apt update
       - sudo apt-get install terraform
       - terraform --version # Verify Terraform installation
-
-  pre_build:
-    commands:
       # Initialize Terraform backend (if using remote state, e.g., S3)
       # For simple S3 bucket creation, local state might be sufficient for a first run
-      # but for production, always use a remote backend like S3+DynamoDB
-      - echo "Initializing Terraform..."
-      - terraform init
-
+      # but for production, always use a remote backend like S3+DynamoD
   build:
     commands:
+      - terraform init
       - terraform apply -input=true -auto-approve
 
   post_build:
