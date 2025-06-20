@@ -30,15 +30,15 @@ resource "aws_s3_bucket_policy" "static_website_bucket_policy" {
   bucket = aws_s3_bucket.my_terraform_bucket.id
 
   policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = "*",
-        Action = "s3:GetObject",
-        Resource = "${aws_s3_bucket.my_terraform_bucket.arn}/*"
-      }
-    ]
+      Version = "2012-10-17",
+      Statement = [{
+      Effect = "Allow",
+      Action = [
+        "s3:PutBucketPolicy",
+        "s3:PutBucketPublicAccessBlock"
+      ],
+      Resource = "arn:aws:s3:::himbhavchappidi2025"
+      }]
   })
 }
 
