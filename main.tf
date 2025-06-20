@@ -2,20 +2,28 @@ provider "aws" {
   region = "us-west-2" # You can change this to your desired AWS region
 }
 
-# Define the S3 bucket with website configuration
+# Define the S3 bucket
 resource "aws_s3_bucket" "my_terraform_bucket" {
-  bucket = "my-unique-codebuild-s3-website-2025-06-20" # IMPORTANT: S3 bucket names must be globally unique. Change this to something unique!
-  # acl = "public-read" # Not recommended directly. Use bucket policy instead for granular control.
-
-  website {
-    index_document = "index.html"
-    error_document = "error.html" # Optional: specify an error page
-  }
+  bucket = "your-unique-codebuild-website-bucket-name" # IMPORTANT: Replace with a globally unique name!
+  acl    = "private" # Keeping ACL private, using policy for public access
 
   tags = {
     Environment = "Development"
     Project     = "CodeBuildTerraformWebsite"
     ManagedBy   = "Terraform"
+  }
+}
+
+# Configure static website hosting
+resource "aws_s3_bucket_website_configuration" "website_config" {
+  bucket = aws_s3_bucket.my_terraform_bucket.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html" # Optional: specify an error page
   }
 }
 
@@ -25,7 +33,6 @@ resource "aws_s3_bucket_versioning" "my_terraform_bucket_versioning" {
   versioning_configuration {
     status = "Enabled"
   }
-
 }
 
 # Add a bucket policy to allow public read access for static website hosting
@@ -35,17 +42,17 @@ resource "aws_s3_bucket_policy" "my_terraform_bucket_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Sid       = "PublicReadGetObject",
-        Effect    = "Allow", # IMPORTANT: Changed to Allow for website hosting
+        Sid     = "PublicReadGetObject",
+        Effect  = "Allow", # IMPORTANT: Changed to Allow for website hosting
         Principal = "*",
-        Action    = "s3:GetObject",
+        Action  = "s3:GetObject",
         Resource  = "${aws_s3_bucket.my_terraform_bucket.arn}/*" # Allow GetObject for all objects in the bucket
       },
       {
-        Sid       = "DenyIncorrectEncryptionHeader",
-        Effect    = "Deny",
+        Sid     = "DenyIncorrectEncryptionHeader",
+        Effect  = "Deny",
         Principal = "*",
-        Action    = "s3:PutObject",
+        Action  = "s3:PutObject",
         Resource  = "${aws_s3_bucket.my_terraform_bucket.arn}/*",
         Condition = {
           StringNotEquals = {
@@ -54,10 +61,10 @@ resource "aws_s3_bucket_policy" "my_terraform_bucket_policy" {
         }
       },
       {
-        Sid       = "DenyUnencryptedObjectUploads",
-        Effect    = "Deny",
+        Sid     = "DenyUnencryptedObjectUploads",
+        Effect  = "Deny",
         Principal = "*",
-        Action    = "s3:PutObject",
+        Action  = "s3:PutObject",
         Resource  = "${aws_s3_bucket.my_terraform_bucket.arn}/*",
         Condition = {
           Null = {
@@ -72,7 +79,7 @@ resource "aws_s3_bucket_policy" "my_terraform_bucket_policy" {
 # Output the S3 website endpoint
 output "s3_website_endpoint" {
   description = "The S3 static website endpoint"
-  value       = aws_s3_bucket.my_terraform_bucket.website_endpoint
+  value       = aws_s3_bucket_website_configuration.website_config.endpoint
 }
 
 # Output the S3 bucket name
