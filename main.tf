@@ -20,3 +20,109 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
     ManagedBy   = "Terraform"
   }
 }
+
+# CodeBuild Role
+resource "aws_iam_role" "codebuild_role" {
+  name = "CodeBuildServiceRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "codebuild.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "codebuild_policy" {
+  name   = "CodeBuildPolicy"
+  role   = aws_iam_role.codebuild_role.id
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "logs:*",
+          "s3:*",
+          "secretsmanager:GetSecretValue",
+          "ssm:GetParameter"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+# CodeDeploy Role
+resource "aws_iam_role" "codedeploy_role" {
+  name = "CodeDeployServiceRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "codedeploy.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "codedeploy_policy" {
+  name   = "CodeDeployPolicy"
+  role   = aws_iam_role.codedeploy_role.id
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "autoscaling:*",
+          "ec2:DescribeInstances",
+          "cloudwatch:PutMetricData"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+# CodePipeline Role
+resource "aws_iam_role" "codepipeline_role" {
+  name = "CodePipelineServiceRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "codepipeline.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "codepipeline_policy" {
+  name   = "CodePipelinePolicy"
+  role   = aws_iam_role.codepipeline_role.id
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "codebuild:StartBuild",
+          "codedeploy:CreateDeployment",
+          "s3:*"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
