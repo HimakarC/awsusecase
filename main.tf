@@ -3,6 +3,6 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "static_site" {
-  bucket = "my-static-website-bucket"
+  bucket = "himchappidi"
   acl    = "public-read"
 }
