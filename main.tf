@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
 }
 
 resource "aws_s3_object" "index_html" {
-  bucket       = aws_s3_bucket.static_website_bucket.bucket
+  bucket       = aws_s3_bucket.my_terraform_bucket.bucket
   key          = "index.html"
   source       = "public/index.html"  # Replace with actual path to your file
   acl          = "public-read"
