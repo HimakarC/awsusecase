@@ -22,10 +22,10 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
 }
 
 resource "aws_s3_object" "index_html" {
-  bucket       = aws_s3_bucket.my_terraform_bucket.id
-  key          = "index.html"
-  source       = "${path.module}/index.html"  # Assumes index.html is in the same folder as your .tf files
-  acl          = "public-read"
+  bucket  = aws_s3_bucket.my_terraform_bucket.id
+  key  = "index.html"
+  source = "${path.module}/index.html"  # Assumes index.html is in the same folder as your .tf files
+  acl = "public-read"
   content_type = "text/html"
 }
 
