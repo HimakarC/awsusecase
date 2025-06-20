@@ -33,4 +33,6 @@ phases:
 
   post_build:
     commands:
-      - echo "Terraform execution complete."
+      - echo "Terraform execution complete. Deploying static website content..."
+      - S3_BUCKET_NAME=$(terraform output -raw s3_bucket_name)
+      - echo "Deploying content to S3 bucket: $S3_BUCKET_NAME"
