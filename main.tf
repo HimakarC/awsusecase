@@ -1,3 +1,16 @@
+terraform{
+  required_providers {
+    aws = {
+          source = "hashicorp/aws"
+          version = "~>4.0"
+        }
+  }
+  backend "s3" {
+    bucket = "my-unique-static-html-bucket-2025"
+    key = "backend"
+    region = "ap-south-1"
+  }
+}
 provider "aws" {
   region = "us-west-2" # You can change this to your desired AWS region
 }
