@@ -78,5 +78,5 @@ output "s3_website_endpoint" {
 # Output the S3 bucket name
 output "s3_bucket_name" {
   description = "The name of the S3 bucket created by Terraform"
-  value       = aws_s3_bucket.my_terraform_bucket.bucketAdd commentMore actions
+  value       = aws_s3_bucket.my_terraform_bucket.bucket
 }
