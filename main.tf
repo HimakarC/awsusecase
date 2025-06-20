@@ -1,4 +1,4 @@
-provider "aws" {Add commentMore actions
+provider "aws" {
   region = "us-west-2" # You can change this to your desired AWS region
 }
 
