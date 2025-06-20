@@ -26,23 +26,6 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
   }
 }
 
-resource "aws_s3_bucket_policy" "static_website_bucket_policy" {
-  bucket = aws_s3_bucket.my_terraform_bucket.id
-
-  policy = jsonencode({
-      Version = "2012-10-17",
-      Statement = [{
-      Principal = "*",
-      Effect = "Allow",
-      Action = [
-        "s3:PutBucketPolicy",
-        "s3:PutBucketPublicAccessBlock"
-      ],
-      Resource = "arn:aws:s3:::himbhavchappidi2025"
-      }]
-  })
-}
-
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket = aws_s3_bucket.my_terraform_bucket.id
   block_public_acls  = false
