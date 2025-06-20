@@ -11,4 +11,5 @@ phases:
       - terraform --version # Verify Terraform installation
   build:
     commands:
+      - terraform init
       - terraform apply -input=false tfapply
