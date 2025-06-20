@@ -34,8 +34,9 @@ phases:
   post_build:
     commands:
       - echo "Terraform execution complete. Deploying static website content..."
-      # Get the S3 bucket name from Terraform output
-      # This assumes terraform apply ran successfully and its state is available
       - S3_BUCKET_NAME=$(terraform output -raw s3_bucket_name)
+      - echo "Retrieved S3_BUCKET_NAME: $S3_BUCKET_NAME"
+      - echo "Deploying content to S3 bucket: $S3_BUCKET_NAME"
+      - aws s3 sync public/ s3://$S3_BUCKET_NAME/ --delete --acl public-read
       - echo "Static website deployment complete. Your website should be available at:"
       - terraform output s3_website_endpoint
