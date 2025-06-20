@@ -10,7 +10,7 @@ phases:
       - terraform --version # Verify Terraform installation
   build:
     commands:
-      - terraform init -backend-config="bucket=my-unique-static-html-bucket-2025" -backend-config="key=terraform.tfstate" -backend-config="region=us-west-2" # Replace with your actual bucket name and region
+      - terraform init -backend-config="bucket=my-unique-static-html-bucket-2025" -backend-config="key=terraform.tfstate" -backend-config="region=ap-south-1" # Replace with your actual bucket name and region
       - terraform apply -input=false -auto-approve
   post_build:
     commands:
