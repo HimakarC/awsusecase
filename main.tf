@@ -14,19 +14,6 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
   bucket = "himbhavchappidi2025" # IMPORTANT: Replace with a globally unique name!
   # acl    = "public-read" # Removed deprecated acl argument
 
-  
-policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = "*",
-        Action = "s3:GetObject",
-        Resource = "${aws_s3_bucket.my_terraform_bucket.arn}/*"
-      }
-    ]
-  })
-
   website {
     index_document = "index.html"
     error_document = "error.html"
@@ -37,6 +24,22 @@ policy = jsonencode({
     Project     = "CodeBuildTerraformWebsite"
     ManagedBy   = "Terraform"
   }
+}
+
+resource "aws_s3_bucket_policy" "static_website_bucket_policy" {
+  bucket = aws_s3_bucket.my_terraform_bucket.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = "*",
+        Action = "s3:GetObject",
+        Resource = "${aws_s3_bucket.my_terraform_bucket.arn}/*"
+      }
+    ]
+  })
 }
 
 resource "aws_s3_object" "index_html" {
