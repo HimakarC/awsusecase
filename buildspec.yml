@@ -17,7 +17,6 @@ phases:
       # but for production, always use a remote backend like S3+DynamoD
   build:
     commands:
-      - terraform init
       - terraform apply -input=true -auto-approve
 
   post_build:
