@@ -19,7 +19,7 @@ phases:
       - echo Planning Terraform changes...
       - terraform plan
       - echo Applying Terraform changes...
-      - terraform apply -auto-approve
+      - terraform apply
 
 artifacts:
   files:
