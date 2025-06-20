@@ -23,15 +23,9 @@ phases:
 
   build:
     commands:
-      # Plan Terraform changes (optional, but good for review)
-      - echo "Planning Terraform changes..."
-      - terraform plan -out=tfplan.out
-
-      # Apply Terraform changes
-      - echo "Applying Terraform changes..."
-      - terraform apply -auto-approve tfplan.out
+      - terraform plan
+      - terraform apply
 
   post_build:
     commands:
       - echo "Terraform execution complete. Deploying static website content..."
-      - terraform output s3_website_endpoint
