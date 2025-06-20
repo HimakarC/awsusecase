@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Static Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        .container {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello from CodeBuild!</h1>
+        <p>This static website is hosted on an S3 bucket created and managed by Terraform and deployed by AWS CodeBuild.</p>
+        <p>Current Time: <span id="currentTime"></span></p>
+    </div>
+    <script>
+        document.getElementById('currentTime').innerText = new Date().toLocaleString();
+    </script>
+</body>
+</html>
