@@ -17,7 +17,7 @@ phases:
       # but for production, always use a remote backend like S3+DynamoD
   build:
     commands:
-      - terraform init
+      - terraform init -backend-config="my-unique-static-html-bucket-2025" -backend-config="key=terraform.tfstate" -backend-config="region=us-west-2"
       - terraform apply -input=false -auto-approve
 
   post_build:
