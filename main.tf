@@ -9,6 +9,7 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
 
   website {
     index_document = "index.html"
+    error_document = "error.html" # Optional: specify an error page
   }
 
   tags = {
@@ -39,6 +40,30 @@ resource "aws_s3_bucket_policy" "my_terraform_bucket_policy" {
         Principal = "*",
         Action    = "s3:GetObject",
         Resource  = "${aws_s3_bucket.my_terraform_bucket.arn}/*" # Allow GetObject for all objects in the bucket
+      },
+      {
+        Sid       = "DenyIncorrectEncryptionHeader",
+        Effect    = "Deny",
+        Principal = "*",
+        Action    = "s3:PutObject",
+        Resource  = "${aws_s3_bucket.my_terraform_bucket.arn}/*",
+        Condition = {
+          StringNotEquals = {
+            "s3:x-amz-server-side-encryption" = "AES256"
+          }
+        }
+      },
+      {
+        Sid       = "DenyUnencryptedObjectUploads",
+        Effect    = "Deny",
+        Principal = "*",
+        Action    = "s3:PutObject",
+        Resource  = "${aws_s3_bucket.my_terraform_bucket.arn}/*",
+        Condition = {
+          Null = {
+            "s3:x-amz-server-side-encryption" = "true"
+          }
+        }
       }
     ]
   })
