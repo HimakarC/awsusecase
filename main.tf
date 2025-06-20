@@ -16,16 +16,16 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
 
   
 policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = "*",
-        Action = "s3:GetObject",
-        Resource = "${aws_s3_bucket.static_website_bucket.arn}/*"
-      }
-    ]
-  })
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = "*",
+        Action = "s3:GetObject",
+        Resource = "${aws_s3_bucket.static_website_bucket.arn}/*"
+      }
+    ]
+  })
 
   website {
     index_document = "index.html"
