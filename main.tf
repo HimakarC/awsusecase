@@ -14,6 +14,19 @@ resource "aws_s3_bucket" "my_terraform_bucket" {
   bucket = "himbhavchappidi2025" # IMPORTANT: Replace with a globally unique name!
   # acl    = "public-read" # Removed deprecated acl argument
 
+  
+policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = "*",
+        Action = "s3:GetObject",
+        Resource = "${aws_s3_bucket.static_website_bucket.arn}/*"
+      }
+    ]
+  })
+
   website {
     index_document = "index.html"
     error_document = "error.html"
@@ -30,7 +43,6 @@ resource "aws_s3_object" "index_html" {
   bucket = aws_s3_bucket.my_terraform_bucket.id
   key = "index.html"
   source = "${path.module}/index.html" # Assumes index.html is in the same folder as your .tf files
-  acl = "public-read"
   content_type = "text/html"
 }
 
