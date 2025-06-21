@@ -1,6 +1,6 @@
 terraform{
   backend "s3" {
-    bucket = "my-unique-static-html-bucket-2025"
+    bucket = "terraformawsusecase"
     key = "backend"
     region = "ap-south-1"
   }
