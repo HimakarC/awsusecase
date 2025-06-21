@@ -2,7 +2,7 @@ terraform{
   backend "s3" {
     bucket = "terraformawsusecase"
     key = "backend"
-    region = "ap-south-1"
+    region = "us-west-2"
   }
 }
 provider "aws" {
