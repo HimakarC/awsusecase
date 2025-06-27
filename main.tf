@@ -12,6 +12,10 @@ provider "aws" {
 
 resource "aws_s3_bucket" "my_terraform_bucket" {
   bucket = var.website_bucket_name
+  website
+  {
+    index_document = "index.html"
+  }
 
   tags = var.tags
 }
