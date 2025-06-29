@@ -28,6 +28,7 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
 }
 
 resource "aws_s3_bucket_policy" "public_read_policy" {
+  bucket = aws_s3_bucket.my_terraform_bucket.id
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
