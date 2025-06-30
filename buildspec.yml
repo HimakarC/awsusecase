@@ -24,4 +24,5 @@ phases:
     commands:
       - echo "Terraform execution complete. Deploying static website content..."
   artifacts:
-    name: SourceArtifact
+    files:
+      - '**/*'
