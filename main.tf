@@ -41,6 +41,7 @@ resource "aws_s3_bucket_policy" "public_read_policy" {
       }
     ]
   })
+  depends_on = [aws_s3_bucket.my_terraform_bucket.id]
 }
 
 resource "aws_s3_object" "index_html" {
