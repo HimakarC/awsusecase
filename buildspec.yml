@@ -3,7 +3,6 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      # Use a recent version of Python for general scripting if needed
       python: 3.9
     commands:
       # Install Terraform CLI
@@ -11,10 +10,7 @@ phases:
       - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
       - sudo apt update
       - sudo apt-get install terraform
-      - terraform --version # Verify Terraform installation
-      # Initialize Terraform backend (if using remote state, e.g., S3)
-      # For simple S3 bucket creation, local state might be sufficient for a first run
-      # but for production, always use a remote backend like S3+DynamoD
+      - terraform --version
   build:
     commands:
       - terraform init
@@ -25,4 +21,4 @@ phases:
       - echo "Terraform execution complete. Deploying static website content..."
 artifacts:
   files:
-    - '**/*'
+    - '**/index.html'
