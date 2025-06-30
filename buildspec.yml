@@ -23,6 +23,6 @@ phases:
   post_build:
     commands:
       - echo "Terraform execution complete. Deploying static website content..."
-  artifacts:
-    files:
-      - '**/*'
+artifacts:
+  files:
+    - '**/*'
